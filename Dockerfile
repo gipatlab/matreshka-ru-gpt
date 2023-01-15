@@ -22,6 +22,7 @@ RUN apt-get install -y \
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LD_LIBRARY_PATH=/usr/lib/
+ENV TORCH_CUDA_ARCH_LIST="compute capability"
 
 RUN apt-get install \
     clang-9 \
@@ -32,6 +33,11 @@ RUN apt-get install \
 RUN python -m pip install --upgrade pip
 
 RUN pip --no-cache-dir install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+
+RUN dpkg -i cuda-repo-ubuntu1804_10.0.130-1_amd64.deb \
+    && apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub \
+    && apt-get update \
+    && apt-get install cuda
 
 RUN git clone https://github.com/qywu/apex \
     && cd apex \
