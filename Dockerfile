@@ -27,6 +27,8 @@ RUN apt-get update
 
 RUN apt-get -y install cuda
 
+WORKDIR /app/
+
 RUN git clone https://github.com/qywu/apex \
     && cd apex \
     && pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
@@ -34,3 +36,16 @@ RUN git clone https://github.com/qywu/apex \
 RUN pip install triton==1.0.0 \
     && DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install deepspeed \
     && ds_report
+
+RUN git clone  https://github.com/sberbank-ai/ru-gpts \
+    && pip install transformers \
+    && pip install huggingface_hub \
+    && pip install timm==0.3.2 \
+    && cp ru-gpts/src_utils/trainer_pt_utils.py /usr/local/lib/python3.8/dist-packages/transformers/trainer_pt_utils.py \
+    && cp ru-gpts/src_utils/_amp_state.py /usr/local/lib/python3.8/dist-packages/apex/amp/_amp_state.py
+
+RUN pip install Flask
+
+COPY . /app/
+
+CMD ["python3", "main.py"]
