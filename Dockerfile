@@ -4,7 +4,7 @@ ENV LD_LIBRARY_PATH=/usr/lib/
 
 RUN apt-get update && apt-get install wget
 
-RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - \
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
     && sudo apt-add-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main" \
     && apt-get update \
     && apt-get install clang-9 llvm-9 llvm-9-dev llvm-9-tools
