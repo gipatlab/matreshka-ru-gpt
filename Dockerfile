@@ -8,6 +8,11 @@ RUN apt-get update \
     && apt-get install clang-9 llvm-9 llvm-9-dev llvm-9-tools -y
 
 # CUDA
+RUN apt-get clean \
+    && apt-get update \
+    && apt-get purge nvidia-* \
+    && apt-get autoremove
+
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin \
     && mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600 \
     && wget https://developer.download.nvidia.com/compute/cuda/11.7.0/local_installers/cuda-repo-ubuntu1804-11-7-local_11.7.0-515.43.04-1_amd64.deb \
