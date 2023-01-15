@@ -2,7 +2,7 @@ FROM pytorch/pytorch:nightly-devel-cuda10.0-cudnn7
 
 WORKDIR /app/
 
-RUN apt-get update && apt-get -f upgrade
+RUN apt-get update
 
 RUN apt-get update \
     && apt-get install -y \
@@ -24,11 +24,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LD_LIBRARY_PATH=/usr/lib/
 ENV TORCH_CUDA_ARCH_LIST="compute capability"
 
-RUN apt-get install \
+RUN apt-get install -y \
     clang-9 \
     llvm-9 \
     llvm-9-dev \
-    llvm-9-tools -y
+    llvm-9-tools
 
 # RUN python -m pip install --force-reinstall pip==21.3.1
 
