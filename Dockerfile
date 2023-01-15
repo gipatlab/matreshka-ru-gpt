@@ -1,11 +1,7 @@
-FROM python:3
+FROM python:3.8
 
 WORKDIR /app
 
-RUN python -m venv /opt/venv
-
-ENV PATH="/opt/venv/bin:$PATH"
-ENV DEBIAN_FRONTEND=noninteractive
 ENV LD_LIBRARY_PATH=/usr/lib/
 
 RUN apt-get update
