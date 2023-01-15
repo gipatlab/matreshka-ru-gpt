@@ -32,12 +32,13 @@ def filter_resuls(nr):
     return [x[:x.find("<|endoftext|>")] for x in nr]
 
 def main():
-    filter_resuls(gpt.generate(
+    res = filter_resuls(gpt.generate(
         "Какие особенности у одаренных подростков? ",
         max_length=50,
         no_repeat_ngram_size=3,
         repetition_penalty=2.,
     ))
+    print(res)
 
 if __name__ == "__main__":
     main()
