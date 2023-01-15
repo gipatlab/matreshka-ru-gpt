@@ -11,5 +11,7 @@ RUN apt-get install git \
 
 RUN python -m pip install --force-reinstall pip==22.3.1
 
+RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+
 RUN git clone https://github.com/qywu/apex
 RUN cd apex && pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
