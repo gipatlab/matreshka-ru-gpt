@@ -14,8 +14,7 @@ RUN apt-get install git \
     clang-9 llvm-9 llvm-9-dev llvm-9-tools -y
 
 RUN git clone https://github.com/qywu/apex
-RUN cd apex
-RUN pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" /app/
+RUN pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./apex
 
 RUN pip install triton==1.0.0
 
