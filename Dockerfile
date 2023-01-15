@@ -11,6 +11,8 @@ RUN apt-get install -y python3-pip
 
 RUN apt-get install -y build-essential libssl-dev libffi-dev python3-dev
 
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|apt-key add -
+
 RUN apt-get install clang-9 llvm-9 llvm-9-dev llvm-9-tools -y
 
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
