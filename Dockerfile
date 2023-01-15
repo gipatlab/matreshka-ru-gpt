@@ -15,7 +15,7 @@ RUN apt-get install git \
 
 RUN git clone https://github.com/qywu/apex
 RUN cd apex
-RUN pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+RUN pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" /app/
 
 RUN pip install triton==1.0.0
 
