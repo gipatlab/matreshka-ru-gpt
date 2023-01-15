@@ -33,7 +33,7 @@ RUN apt-get install \
     llvm-9-dev \
     llvm-9-tools -y
 
-RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
+RUN pip3 install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 
 RUN git clone https://github.com/qywu/apex \
     && cd apex \
