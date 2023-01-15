@@ -34,15 +34,10 @@ RUN python -m pip install --upgrade pip
 
 RUN pip --no-cache-dir install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb
-RUN dpkg -i cuda-keyring_1.0-1_all.deb
-RUN apt-get update
-RUN apt-get --purge autoremove
-RUN apt-get -y install cuda
-
 RUN git clone https://github.com/qywu/apex \
     && cd apex \
-    && pip --no-cache-dir install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+    && pip install -v --no-cache-dir ./
+#     && pip --no-cache-dir install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
 
 RUN pip --no-cache-dir install triton==1.0.0
 
