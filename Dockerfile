@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM python:3.8.16-slim
 # FROM pytorch/pytorch:nightly-devel-cuda10.0-cudnn7
 
 WORKDIR /app/
@@ -13,6 +13,8 @@ RUN apt-get update \
     software-properties-common
 
 RUN apt-get update
+
+RUN add-apt-repository ppa:deadsnakes/ppa
 
 RUN apt-get install -y python3-pip
 
