@@ -16,4 +16,4 @@ RUN apt-get install git \
 RUN python -m pip install --force-reinstall pip==21.3.1
 
 RUN git clone https://github.com/qywu/apex
-RUN pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./apex
+RUN cd apex && pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
