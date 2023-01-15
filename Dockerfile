@@ -2,7 +2,7 @@ FROM pytorch/pytorch:nightly-devel-cuda10.0-cudnn7
 
 ENV LD_LIBRARY_PATH=/usr/lib/
 
-RUN apt-get install wget
+RUN apt-get update && apt-get install wget
 
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - \
     && sudo apt-add-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main" \
