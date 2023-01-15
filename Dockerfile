@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt -y upgrade
+RUN apt-get update
 
 RUN apt-get update \
     && apt-get install -y wget git curl software-properties-common
@@ -14,35 +14,6 @@ RUN apt-get install -y build-essential xz-utils libssl-dev libffi-dev python3-de
 ENV LD_LIBRARY_PATH=/usr/lib/
 
 RUN apt-get install clang-9 llvm-9 llvm-9-dev llvm-9-tools -y
-
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
-
-RUN mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
-
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
-
-RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /"
-
-RUN apt-get update
-
-RUN apt-get -y install cuda
-
-WORKDIR /app/
-
-RUN git clone https://github.com/qywu/apex \
-    && cd apex \
-    && pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
-
-RUN pip install triton==1.0.0 \
-    && DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install deepspeed \
-    && ds_report
-
-RUN git clone  https://github.com/sberbank-ai/ru-gpts \
-    && pip install transformers \
-    && pip install huggingface_hub \
-    && pip install timm==0.3.2 \
-    && cp ru-gpts/src_utils/trainer_pt_utils.py /usr/local/lib/python3.8/dist-packages/transformers/trainer_pt_utils.py \
-    && cp ru-gpts/src_utils/_amp_state.py /usr/local/lib/python3.8/dist-packages/apex/amp/_amp_state.py
 
 RUN pip install Flask
 
