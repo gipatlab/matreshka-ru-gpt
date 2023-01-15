@@ -3,6 +3,7 @@ FROM python:3.8
 WORKDIR /app
 
 ENV LD_LIBRARY_PATH=/usr/lib/
+ENV TORCH_CUDA_ARCH_LIST="compute capability"
 
 RUN apt-get update
 
