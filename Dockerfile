@@ -1,5 +1,5 @@
-# FROM ubuntu:18.04
-FROM pytorch/pytorch:nightly-devel-cuda10.0-cudnn7
+FROM ubuntu:18.04
+# FROM pytorch/pytorch:nightly-devel-cuda10.0-cudnn7
 
 WORKDIR /app/
 
