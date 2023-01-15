@@ -1,4 +1,4 @@
-FROM nvidia/cuda
+FROM pytorch/pytorch:nightly-devel-cuda10.0-cudnn7
 
 WORKDIR /app/
 
@@ -30,9 +30,9 @@ RUN apt-get install \
     llvm-9-dev \
     llvm-9-tools -y
 
-RUN python -m pip install --force-reinstall pip==21.3.1
+# RUN python -m pip install --force-reinstall pip==21.3.1
 
-RUN pip --no-cache-dir install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+# RUN pip --no-cache-dir install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 
 RUN git clone https://github.com/qywu/apex \
     && cd apex \
