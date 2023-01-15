@@ -2,7 +2,7 @@ FROM pytorch/pytorch:nightly-devel-cuda10.0-cudnn7
 
 # ENV LD_LIBRARY_PATH=/usr/lib/
 
-RUN apt-get update && apt-get install wget build-essential xz-utils curl
+RUN apt-get update && apt-get install wget build-essential xz-utils curl -y
 
 RUN curl -SL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-pc-linux-gnu.tar.xz | tar -xJC
 
