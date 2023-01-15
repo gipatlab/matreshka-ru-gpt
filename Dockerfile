@@ -17,8 +17,7 @@ RUN apt-get -qq update -y \
 RUN curl -SL https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh -o /tmp/curl-install.sh \
     && chmod u+x /tmp/curl-install.sh \
     && mkdir /usr/bin/cmake \
-    && /tmp/curl-install.sh --skip-license --prefix=/usr/bin/cmake \
-    && rm /tmp/curl-install.sh
+    && /tmp/curl-install.sh --skip-license --prefix=/usr/bin/cmake
 
 RUN curl -SL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz | tar -xJC . \
     && mv clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04 clang_9.0.0
