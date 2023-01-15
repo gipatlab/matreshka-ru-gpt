@@ -1,4 +1,4 @@
-FROM python:3.8.16-slim
+FROM nvidia/cuda
 
 WORKDIR /app/
 
@@ -30,20 +30,19 @@ RUN apt-get install \
     llvm-9-dev \
     llvm-9-tools -y
 
-# RUN python -m pip install --upgrade pip
 RUN python -m pip install --force-reinstall pip==21.3.1
 
 RUN pip --no-cache-dir install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 
 RUN git clone https://github.com/qywu/apex \
     && cd apex \
-    && pip install -v --no-cache-dir ./
+    && pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
 
-RUN pip install triton==1.0.0
-
-RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install deepspeed
-
-RUN ds_report
+# RUN pip install triton==1.0.0
+#
+# RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install deepspeed
+#
+# RUN ds_report
 
 RUN pip --no-cache-dir install Flask
 
