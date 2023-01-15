@@ -23,6 +23,8 @@ RUN apt-get install -y \
     libffi-dev \
     python3-dev
 
+
+ENV DEBIAN_FRONTEND=noninteractive
 ENV LD_LIBRARY_PATH=/usr/lib/
 
 RUN apt-get install \
@@ -31,7 +33,7 @@ RUN apt-get install \
     llvm-9-dev \
     llvm-9-tools -y
 
-RUN pip3 install torch torchvision torchaudio
+RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
 
 RUN git clone https://github.com/qywu/apex \
     && cd apex \
