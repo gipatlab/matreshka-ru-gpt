@@ -15,7 +15,7 @@ ENV LD_LIBRARY_PATH=/usr/lib/
 
 RUN apt-get install clang-9 llvm-9 llvm-9-dev llvm-9-tools -y
 
-RUN pip install Flask
+RUN pip3 install Flask
 
 COPY . /app/
 
