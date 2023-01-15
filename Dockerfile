@@ -1,4 +1,5 @@
-FROM ubuntu:18.04
+# FROM ubuntu:18.04
+FROM pytorch/pytorch:nightly-devel-cuda10.0-cudnn7
 
 WORKDIR /app/
 
@@ -30,7 +31,16 @@ RUN apt-get install \
     llvm-9-dev \
     llvm-9-tools -y
 
-RUN pip3 install torch torchvision torchaudio
+RUN git clone https://github.com/qywu/apex \
+    && cd apex \
+    && pip3 install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+
+RUN pip3 install triton==1.0.0
+
+RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install deepspeed
+
+RUN ds_report
+# RUN pip3 install torch torchvision torchaudio
 
 RUN pip3 install Flask
 
