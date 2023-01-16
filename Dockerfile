@@ -24,11 +24,23 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LD_LIBRARY_PATH=/usr/lib/
 ENV TORCH_CUDA_ARCH_LIST="compute capability"
 
+RUN deb http://apt.llvm.org/buster/ llvm-toolchain-buster main
+RUN deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster main
+RUN deb http://apt.llvm.org/buster/ llvm-toolchain-buster-10 main
+RUN deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-10 main
+RUN deb http://apt.llvm.org/buster/ llvm-toolchain-buster-11 main
+RUN deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-11 main
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+RUN apt-get update
+
 RUN apt-get install -y \
-    clang-9 \
-    llvm-9 \
-    llvm-9-dev \
-    llvm-9-tools
+    clang-11 \
+    llvm-11 \
+    llvm-11-dev \
+    llvm-11-tools
+
+ENV CMAKE_C_COMPILER=clang-11
+ENV CMAKE_CXX_COMPILER=clang++-11
 
 # RUN python -m pip install --force-reinstall pip==21.3.1
 
