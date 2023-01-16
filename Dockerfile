@@ -28,7 +28,7 @@ RUN apt-get install -y clang-9 llvm-9 llvm-9-dev llvm-9-tools
 
 RUN apt-get install -y python3-pip
 
-RUN pip install Flask
+RUN pip3 install Flask
 
 COPY . /app/
 
