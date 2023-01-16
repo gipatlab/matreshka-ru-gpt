@@ -20,7 +20,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
-          password: 88dtwGb&11175087
+          password: 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
           registry: docker.pkg.github.com
           repository: gipatlab/matreshka-ru-gpt/matreshka-ru-gpt
           tag_with_ref: true
