@@ -45,7 +45,7 @@ RUN pip3 install triton
 
 
 # RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install --no-dependencies --no-cache-dir deepspeed
-RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install deepspeed
+RUN pip install deepspeed
 
 RUN ds_report
 
