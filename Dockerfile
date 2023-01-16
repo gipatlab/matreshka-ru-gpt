@@ -28,6 +28,12 @@ RUN apt-get install -y clang-9 llvm-9 llvm-9-dev llvm-9-tools
 
 RUN apt-get install -y python3-pip
 
+RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+
+# RUN git clone https://github.com/qywu/apex \
+#     && cd apex \
+#     && pip3 install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+
 RUN pip3 install Flask
 
 COPY . /app/
