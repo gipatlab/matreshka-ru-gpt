@@ -30,7 +30,7 @@ RUN apt-get install -y clang-9 llvm-9 llvm-9-dev llvm-9-tools
 
 RUN apt-get install -y python3-pip
 
-RUN python3 -m pip install --force-reinstall pip==21.3.1
+# RUN python3 -m pip install --force-reinstall pip==21.3.1
 
 RUN pip3 install Pillow
 
@@ -42,14 +42,15 @@ RUN git clone https://github.com/qywu/apex \
     && cd apex \
     && pip3 install -v --no-cache-dir ./
     # && pip3 install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+#
+RUN pip3 install triton
 
-RUN pip3 install triton==1.0.0
+# RUN python3 -m pip install --upgrade pip
 
-RUN python3 -m pip install --upgrade pip
+# RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install --no-dependencies --no-cache-dir deepspeed
+RUN pip install deepspeed
 
-RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install --no-dependencies --no-cache-dir deepspeed
-
-RUN ds_report
+# RUN ds_report
 
 RUN pip3 install Flask
 
