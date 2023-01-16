@@ -16,7 +16,13 @@ RUN apt-get install -y \
     xz-utils \
     libssl-dev \
     libffi-dev \
-    python3-dev
+    python3-dev \
+    libjpeg-dev \
+    zlib1g-dev
+
+RUN pip3 install Pillow
+
+RUN pip3 install setuptools
 
 RUN apt-get update
 
