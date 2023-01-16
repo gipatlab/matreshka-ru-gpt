@@ -45,7 +45,7 @@ RUN git clone https://github.com/qywu/apex \
 
 RUN pip3 install triton
 
-RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip3 install deepspeed
+RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip3 install deepspeed==0.3.7
 
 RUN ds_report
 
