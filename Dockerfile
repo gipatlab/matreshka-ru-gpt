@@ -24,12 +24,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LD_LIBRARY_PATH=/usr/lib/
 ENV TORCH_CUDA_ARCH_LIST="compute capability"
 
-RUN deb http://apt.llvm.org/buster/ llvm-toolchain-buster main
-RUN deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster main
-RUN deb http://apt.llvm.org/buster/ llvm-toolchain-buster-10 main
-RUN deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-10 main
-RUN deb http://apt.llvm.org/buster/ llvm-toolchain-buster-11 main
-RUN deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-11 main
+RUN add-apt-repository 'deb http://apt.llvm.org/buster/ llvm-toolchain-buster main'
+RUN add-apt-repository 'deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster main'
+RUN add-apt-repository 'deb http://apt.llvm.org/buster/ llvm-toolchain-buster-10 main'
+RUN add-apt-repository 'deb http://apt.llvm.org/buster/ llvm-toolchain-buster-10 main'
+RUN add-apt-repository 'deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-10 main'
+RUN add-apt-repository 'deb http://apt.llvm.org/buster/ llvm-toolchain-buster-11 main'
+RUN add-apt-repository 'deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-11 main'
+
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
 RUN apt-get update
 
