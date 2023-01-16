@@ -30,6 +30,8 @@ RUN apt-get install -y clang-9 llvm-9 llvm-9-dev llvm-9-tools
 
 RUN apt-get install -y python3-pip
 
+RUN python3 -m pip install --force-reinstall pip==21.3.1
+
 RUN pip3 install Pillow
 
 RUN pip3 install setuptools
