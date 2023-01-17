@@ -26,13 +26,13 @@ ENV TORCH_CUDA_ARCH_LIST="compute capability"
 
 RUN apt-get install -y clang-9 llvm-9 llvm-9-dev llvm-9-tools
 
-RUN apt-get install -y python3-pip
+# RUN apt-get install -y python3-pip
 
 RUN pip install Pillow
 
-# RUN pip3 install setuptools
-#
-# RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+RUN pip install setuptools
+
+RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 #
 # RUN git clone https://github.com/qywu/apex \
 #     && cd apex \
