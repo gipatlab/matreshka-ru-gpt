@@ -51,8 +51,8 @@ RUN pip3 install huggingface_hub
 RUN pip3 install timm==0.3.2
 RUN git clone https://github.com/sberbank-ai/ru-gpts
 RUN ls /usr/local/lib/
-RUN cp ru-gpts/src_utils/trainer_pt_utils.py /usr/local/lib/python3.8/dist-packages/transformers/trainer_pt_utils.py
-RUN cp ru-gpts/src_utils/_amp_state.py /usr/local/lib/python3.8/dist-packages/apex/amp/_amp_state.py
+RUN cp ru-gpts/src_utils/trainer_pt_utils.py /usr/local/lib/python3.8/site-packages/transformers/trainer_pt_utils.py
+RUN cp ru-gpts/src_utils/_amp_state.py /usr/local/lib/python3.8/site-packages/apex/amp/_amp_state.py
 # site
 RUN pip3 install Flask
 
