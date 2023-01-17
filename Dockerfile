@@ -26,8 +26,6 @@ ENV TORCH_CUDA_ARCH_LIST="compute capability"
 
 RUN apt-get install -y clang-9 llvm-9 llvm-9-dev llvm-9-tools
 
-# RUN apt-get install -y python3-pip
-# You should consider upgrading via the '/usr/local/bin/python -m pip install --upgrade pip' command.
 WORKDIR /app/
 
 RUN pip install Pillow
@@ -43,8 +41,7 @@ RUN git clone https://github.com/qywu/apex \
 
 RUN pip install triton
 
-# # RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install --no-dependencies --no-cache-dir deepspeed
-RUN pip install deepspeed
+RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install deepspeed
 
 RUN ds_report
 
