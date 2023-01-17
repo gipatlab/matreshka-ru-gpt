@@ -1,40 +1,43 @@
-import deepspeed
-import warnings
-import sys
-import os
-from src.xl_wrapper import RuGPT3XL
+import numpy as np
 import torch
-from src import mpu
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from flask import Flask, request, jsonify
 
-warnings.filterwarnings("ignore")
-sys.path.append("ru-gpts/")
-os.environ["USE_DEEPSPEED"] = "1"
-os.environ["MASTER_ADDR"] = "127.0.0.1"
-torch.cuda.is_available()
-os.environ["MASTER_PORT"] = "5000"
-
-
-gpt = RuGPT3XL.from_pretrained("sberbank-ai/rugpt3xl", seq_len=512)
-
-def filter_resuls(nr):
-  return [x[:x.find("<|endoftext|>")] for x in nr]
 
 app = Flask(__name__)
+
+np.random.seed(42)
+torch.manual_seed(42)
+
+def load_tokenizer_and_model(model_name_or_path):
+  return GPT2Tokenizer.from_pretrained(model_name_or_path), GPT2LMHeadModel.from_pretrained(model_name_or_path).cuda()
+
+def generate(
+    model, tok, text,
+    do_sample=True, max_length=50, repetition_penalty=5.0,
+    top_k=5, top_p=0.95, temperature=1,
+    num_beams=None,
+    no_repeat_ngram_size=3
+    ):
+  input_ids = tok.encode(text, return_tensors="pt").cuda()
+  out = model.generate(
+      input_ids.cuda(),
+      max_length=max_length,
+      repetition_penalty=repetition_penalty,
+      do_sample=do_sample,
+      top_k=top_k, top_p=top_p, temperature=temperature,
+      num_beams=num_beams, no_repeat_ngram_size=no_repeat_ngram_size
+      )
+  return list(map(tok.decode, out))
 
 @app.route("/message", methods=["POST"])
 def message():
   try:
     message = request.get_json()["message"]
-    res = filter_resuls(gpt.generate(
-      message,
-      do_sample=True,
-      num_return_sequences=5,
-      max_length=50,
-      no_repeat_ngram_size=3,
-      repetition_penalty=2.,
-    ))
-    jsonify({message: res})
+    tok, model = load_tokenizer_and_model("sberbank-ai/rugpt3large_based_on_gpt2")
+    generated = generate(model, tok, message, num_beams=10)
+
+    jsonify({generated: generated})
   except:
     return jsonify({'error': "Parameter message is required."})
 
