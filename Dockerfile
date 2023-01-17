@@ -28,6 +28,12 @@ RUN apt-get install -y clang-9 llvm-9 llvm-9-dev llvm-9-tools
 
 WORKDIR /app/
 
+RUN apt-get update
+RUN add-apt-repository ppa:deadsnakes/ppa -y
+RUN apt-get install -y python3.8
+RUN ln -s /usr/bin/python3.8 /usr/bin/python
+RUN apt-get install -y python3-pip
+
 RUN pip3 install Pillow
 
 RUN pip3 install setuptools
