@@ -41,6 +41,8 @@ RUN git clone https://github.com/qywu/apex \
 
 RUN pip install triton==1.0.0
 
+RUN python -m pip install --force-reinstall pip==21.3.1
+
 RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install deepspeed==0.7.7
 
 RUN ds_report
@@ -48,7 +50,6 @@ RUN ds_report
 RUN pip install transformers
 RUN pip install huggingface_hub
 RUN pip install timm==0.3.2
-
 
 RUN git clone https://github.com/sberbank-ai/ru-gpts
 
