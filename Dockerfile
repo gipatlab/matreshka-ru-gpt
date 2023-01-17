@@ -27,6 +27,8 @@ ENV TORCH_CUDA_ARCH_LIST="compute capability"
 RUN apt-get install -y clang-9 llvm-9 llvm-9-dev llvm-9-tools
 
 # RUN apt-get install -y python3-pip
+# You should consider upgrading via the '/usr/local/bin/python -m pip install --upgrade pip' command.
+WORKDIR /app/
 
 RUN pip install Pillow
 
@@ -49,14 +51,14 @@ RUN ds_report
 RUN pip install transformers
 RUN pip install huggingface_hub
 RUN pip install timm==0.3.2
+
+
 RUN git clone https://github.com/sberbank-ai/ru-gpts
 
 RUN cp ru-gpts/src_utils/trainer_pt_utils.py /usr/local/lib/python3.8/site-packages/transformers/trainer_pt_utils.py
 RUN cp ru-gpts/src_utils/_amp_state.py /usr/local/lib/python3.8/site-packages/apex/amp/_amp_state.py
 
-RUN pip3 install Flask
-
-WORKDIR /app/
+RUN pip install Flask
 
 COPY . /app/
 
