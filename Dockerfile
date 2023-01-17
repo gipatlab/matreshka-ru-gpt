@@ -43,8 +43,8 @@ RUN pip3 install torch torchvision torchaudio --extra-index-url https://download
 
 RUN git clone https://github.com/qywu/apex \
     && cd apex \
-#     && pip3 install -v --no-cache-dir ./
-    && pip3 install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+    && pip3 install -v --no-cache-dir ./
+#     && pip3 install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
 
 RUN pip3 install triton==1.0.0
 
