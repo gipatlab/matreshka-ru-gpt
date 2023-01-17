@@ -46,7 +46,7 @@ RUN pip3 install deepspeed
 
 RUN ds_report
 
-RUN pip3 install transformers \
+RUN pip install transformers \
     && pip3 install huggingface_hub \
     && pip3 install timm==0.3.2 \
     && git clone https://github.com/sberbank-ai/ru-gpts \

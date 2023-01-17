@@ -9,6 +9,7 @@ from src.xl_wrapper import RuGPT3XL
 import torch
 torch.cuda.is_available()
 from src import mpu
+
 from flask import Flask, request, jsonify
 
 os.environ["MASTER_ADDR"] = "127.0.0.1"
