@@ -33,28 +33,28 @@ RUN pip install Pillow
 RUN pip install setuptools
 
 RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
-#
-# RUN git clone https://github.com/qywu/apex \
-#     && cd apex \
-#     && pip3 install -v --no-cache-dir ./
-#     # && pip3 install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
-#
-# RUN pip3 install triton
-#
+
+RUN git clone https://github.com/qywu/apex \
+    && cd apex \
+    && pip3 install -v --no-cache-dir ./
+    # && pip3 install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+
+RUN pip install triton
+
 # # RUN DS_BUILD_CPU_ADAM=1 DS_BUILD_SPARSE_ATTN=1 pip install --no-dependencies --no-cache-dir deepspeed
-# RUN pip3 install deepspeed
-#
-# RUN ds_report
-#
-# RUN pip install transformers
-# RUN pip3 install huggingface_hub
-# RUN pip3 install timm==0.3.2
-# RUN git clone https://github.com/sberbank-ai/ru-gpts
-# RUN ls /usr/local/lib/
-# RUN cp ru-gpts/src_utils/trainer_pt_utils.py /usr/local/lib/python3.8/site-packages/transformers/trainer_pt_utils.py
-# RUN cp ru-gpts/src_utils/_amp_state.py /usr/local/lib/python3.8/site-packages/apex/amp/_amp_state.py
-#
-# RUN pip3 install Flask
+RUN pip install deepspeed
+
+RUN ds_report
+
+RUN pip install transformers
+RUN pip install huggingface_hub
+RUN pip install timm==0.3.2
+RUN git clone https://github.com/sberbank-ai/ru-gpts
+
+RUN cp ru-gpts/src_utils/trainer_pt_utils.py /usr/local/lib/python3.8/site-packages/transformers/trainer_pt_utils.py
+RUN cp ru-gpts/src_utils/_amp_state.py /usr/local/lib/python3.8/site-packages/apex/amp/_amp_state.py
+
+RUN pip3 install Flask
 
 WORKDIR /app/
 
