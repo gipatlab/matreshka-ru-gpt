@@ -31,7 +31,7 @@ WORKDIR /app/
 RUN apt-get update
 RUN add-apt-repository ppa:deadsnakes/ppa -y
 RUN apt-get update
-RUN apt-get install -y python3.8
+RUN apt-get install -y python3.10
 # RUN ln -s /usr/bin/python3.8 /usr/bin/python
 RUN apt-get install -y python3-pip
 
