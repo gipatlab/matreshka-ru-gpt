@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 np.random.seed(42)
 torch.manual_seed(42)
-
+torch.device("cpu")
 def load_tokenizer_and_model(model_name_or_path):
   return GPT2Tokenizer.from_pretrained(model_name_or_path), GPT2LMHeadModel.from_pretrained(model_name_or_path).cuda()
 
