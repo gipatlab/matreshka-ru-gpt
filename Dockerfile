@@ -13,16 +13,6 @@ RUN apt-get update \
     curl \
     software-properties-common
 
-RUN add-apt-repository -y ppa:deadsnakes \
-    && apt-get install -y --no-install-recommends \
-    && python3.8-venv \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && :
-
-RUN python3.8 -m venv /venv
-ENV PATH=/venv/bin:$PATH
-
 RUN apt-get install -y \
     build-essential \
     xz-utils \
