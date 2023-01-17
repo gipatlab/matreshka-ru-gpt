@@ -3,14 +3,15 @@ import torch
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from flask import Flask, request, jsonify
 
-
 app = Flask(__name__)
+
+def load_tokenizer_and_model(model_name_or_path):
+  return GPT2Tokenizer.from_pretrained(model_name_or_path), GPT2LMHeadModel.from_pretrained(model_name_or_path).cuda()
 
 np.random.seed(42)
 torch.manual_seed(42)
 torch.device("cpu")
-def load_tokenizer_and_model(model_name_or_path):
-  return GPT2Tokenizer.from_pretrained(model_name_or_path), GPT2LMHeadModel.from_pretrained(model_name_or_path).cuda()
+tok, model = load_tokenizer_and_model("sberbank-ai/rugpt3large_based_on_gpt2")
 
 def generate(
     model, tok, text,
@@ -34,7 +35,7 @@ def generate(
 def message():
   try:
     message = request.get_json()["message"]
-    tok, model = load_tokenizer_and_model("sberbank-ai/rugpt3large_based_on_gpt2")
+
     generated = generate(model, tok, message, num_beams=10)
 
     jsonify({generated: generated})
