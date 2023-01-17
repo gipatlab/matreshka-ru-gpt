@@ -1,35 +1,31 @@
 import numpy as np
 import torch
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from transformers import (GPT2LMHeadModel, GPT2Tokenizer)
+from datetime import datetime
 from flask import Flask, request, jsonify
 
+device = torch.device("cpu")
+model_type = 'gpt2'
+model_class, tokenizer_class = GPT2LMHeadModel, GPT2Tokenizer
+tokenizer = tokenizer_class.from_pretrained("sberbank-ai/rugpt3medium_based_on_gpt2")
 app = Flask(__name__)
 
-def load_tokenizer_and_model(model_name_or_path):
-  return GPT2Tokenizer.from_pretrained(model_name_or_path), GPT2LMHeadModel.from_pretrained(model_name_or_path).cuda()
+def set_seed(seed=datetime.now().microsecond):
+  np.random.seed(seed)
+  torch.manual_seed(seed)
+  print("random seed is " + str(seed))
+  if torch.cuda.device_count() > 0:
+    torch.cuda.manual_seed_all(seed)
 
-np.random.seed(42)
-torch.manual_seed(42)
-torch.device("cpu")
 
+set_seed()
+model = model_class.from_pretrained("sberbank-ai/rugpt3medium_based_on_gpt2")
+model.to(device)
 
-def generate(
-    model, tok, text,
-    do_sample=True, max_length=50, repetition_penalty=5.0,
-    top_k=5, top_p=0.95, temperature=1,
-    num_beams=None,
-    no_repeat_ngram_size=3
-    ):
-  input_ids = tok.encode(text, return_tensors="pt").cuda()
-  out = model.generate(
-      input_ids.cuda(),
-      max_length=max_length,
-      repetition_penalty=repetition_penalty,
-      do_sample=do_sample,
-      top_k=top_k, top_p=top_p, temperature=temperature,
-      num_beams=num_beams, no_repeat_ngram_size=no_repeat_ngram_size
-      )
-  return list(map(tok.decode, out))
+def cut_extra_stuff(txt):
+  """Вырезает артефакты"""
+  extra = txt.find('\n\n\n')
+  return txt[0:extra] if extra != -1 else txt
 
 @app.route("/message", methods=["POST"])
 def message():
@@ -38,10 +34,40 @@ def message():
   except:
     return jsonify({'error': "Parameter message is required."})
 
-  tok, model = load_tokenizer_and_model("sberbank-ai/rugpt3large_based_on_gpt2")
-  generated = generate(model, tok, message, num_beams=10)
+  encoded_prompt = tokenizer.encode(message, add_special_tokens=False, return_tensors="pt")
+  encoded_prompt = encoded_prompt.to(device)
 
-  return jsonify({generated: generated})
+  output_sequences = model.generate(
+    input_ids=encoded_prompt,
+    max_length=64 + len(encoded_prompt[0]),
+    temperature=1.0,
+    top_k=50,
+    top_p=0.92,
+    repetition_penalty=1.0,
+    do_sample=True,
+    num_return_sequences=1,
+  )
+
+  if len(output_sequences.shape) > 2:
+    output_sequences.squeeze_()
+
+  stop_token = "</s>"
+
+  res = ""
+
+  for generated_sequence_idx, generated_sequence in enumerate(output_sequences):
+    generated_sequence = generated_sequence.tolist()
+    text = tokenizer.decode(generated_sequence, clean_up_tokenization_spaces=True)
+    text = text[:text.find(stop_token) if stop_token else None]
+    total_sequence = (
+      # prompt_text +
+      text[len(
+        tokenizer.decode(encoded_prompt[0], clean_up_tokenization_spaces=True)):].rsplit(' ', 1)[0])
+
+    total_sequence = cut_extra_stuff(total_sequence)
+    res = total_sequence
+
+  return jsonify({'generated': res})
 
 
 app.run(host="0.0.0.0", port=8081, debug=True, threaded=True)
