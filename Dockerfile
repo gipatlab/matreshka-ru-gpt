@@ -66,6 +66,8 @@ FROM python:3.8
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 
+WORKDIR /app/
+
 RUN pip install transformers
 
 RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
