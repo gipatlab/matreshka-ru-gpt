@@ -1,7 +1,5 @@
 FROM python:3.8
 
-WORKDIR /app/
-
 RUN apt-get update
 
 RUN apt-get update \
@@ -56,6 +54,8 @@ RUN pip3 install transformers \
     && cp ru-gpts/src_utils/_amp_state.py /usr/local/lib/python3.8/dist-packages/apex/amp/_amp_state.py
 
 RUN pip3 install Flask
+
+WORKDIR /app/
 
 COPY . /app/
 
