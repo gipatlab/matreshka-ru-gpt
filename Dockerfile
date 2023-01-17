@@ -1,4 +1,8 @@
-FROM python:3.8
+FROM nvidia/cuda:11.3.0-base-ubuntu18.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LD_LIBRARY_PATH=/usr/lib/
+ENV TORCH_CUDA_ARCH_LIST="compute capability"
 
 RUN apt-get update
 
@@ -8,6 +12,16 @@ RUN apt-get update \
     git \
     curl \
     software-properties-common
+
+RUN add-apt-repository -y ppa:deadsnakes \
+    && apt-get install -y --no-install-recommends \
+    && python3.8-venv \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && :
+
+RUN python3.8 -m venv /venv
+ENV PATH=/venv/bin:$PATH
 
 RUN apt-get install -y \
     build-essential \
@@ -19,10 +33,6 @@ RUN apt-get install -y \
     zlib1g-dev
 
 RUN apt-get update
-
-ENV DEBIAN_FRONTEND=noninteractive
-ENV LD_LIBRARY_PATH=/usr/lib/
-ENV TORCH_CUDA_ARCH_LIST="compute capability"
 
 RUN apt-get install -y clang-9 llvm-9 llvm-9-dev llvm-9-tools
 
