@@ -46,7 +46,7 @@ RUN git clone https://github.com/qywu/apex \
     && pip3 install -v --no-cache-dir ./
 #     && pip3 install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
 
-RUN python -m pip install --force-reinstall pip==21.3.1
+RUN python3 -m pip install --force-reinstall pip==21.3.1
 
 RUN pip3 install triton
 
