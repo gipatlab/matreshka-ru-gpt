@@ -35,15 +35,12 @@ def generate(
 def message():
   try:
     message = request.get_json()["message"]
-
-    generated = generate(model, tok, message, num_beams=10)
-
-    return jsonify({generated: generated})
   except:
     return jsonify({'error': "Parameter message is required."})
 
+  generated = generate(model, tok, message, num_beams=10)
 
-  return jsonify({'message': "res"})
+  return jsonify({generated: generated})
 
 def main():
   app.run(host="0.0.0.0", port=8081, debug=True, threaded=True)
