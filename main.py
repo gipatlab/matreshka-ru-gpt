@@ -11,7 +11,7 @@ def load_tokenizer_and_model(model_name_or_path):
 np.random.seed(42)
 torch.manual_seed(42)
 torch.device("cpu")
-tok, model = load_tokenizer_and_model("sberbank-ai/rugpt3large_based_on_gpt2")
+
 
 def generate(
     model, tok, text,
@@ -38,6 +38,7 @@ def message():
   except:
     return jsonify({'error': "Parameter message is required."})
 
+  tok, model = load_tokenizer_and_model("sberbank-ai/rugpt3large_based_on_gpt2")
   generated = generate(model, tok, message, num_beams=10)
 
   return jsonify({generated: generated})
