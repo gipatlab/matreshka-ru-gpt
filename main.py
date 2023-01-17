@@ -38,7 +38,7 @@ def message():
 
     generated = generate(model, tok, message, num_beams=10)
 
-    jsonify({generated: generated})
+    return jsonify({generated: generated})
   except:
     return jsonify({'error': "Parameter message is required."})
 
