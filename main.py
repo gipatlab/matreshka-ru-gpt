@@ -42,10 +42,6 @@ def message():
 
   return jsonify({generated: generated})
 
-def main():
-  app.run(host="0.0.0.0", port=8081, debug=True, threaded=True)
 
-
-if __name__ == "__main__":
-  main()
+app.run(host="0.0.0.0", port=8081, debug=True, threaded=True)
 
