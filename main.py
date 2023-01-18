@@ -3,7 +3,8 @@ import torch
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from flask import Flask, request, jsonify
 
-app = Flask(__name__)
+
+
 np.random.seed(42)
 torch.manual_seed(42)
 device = torch.device("cpu")
@@ -29,6 +30,10 @@ def generate(
       )
   return list(map(tok.decode, out))
 
+
+
+app = Flask(__name__)
+app.run(host="0.0.0.0", port=8081, debug=True, threaded=True)
 tok, model = load_tokenizer_and_model("sberbank-ai/rugpt3large_based_on_gpt2")
 
 @app.route("/message", methods=["POST"])
@@ -39,10 +44,10 @@ def message():
     return jsonify({'error': "Parameter message is required."})
 
 
-  generated = generate(model, tok, "Какие особенности у одаренных подростков? ", num_beams=10)
+  generated = generate(model, tok, message, num_beams=10)
 
   return jsonify({'generated': generated})
 
 
-app.run(host="0.0.0.0", port=8081, debug=True, threaded=True)
+
 
