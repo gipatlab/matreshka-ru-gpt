@@ -7,7 +7,7 @@ from flask import Flask, request, jsonify
 device = torch.device("cpu")
 model_type = 'gpt2'
 model_class, tokenizer_class = GPT2LMHeadModel, GPT2Tokenizer
-tokenizer = tokenizer_class.from_pretrained("sberbank-ai/rugpt3medium_based_on_gpt2")
+tokenizer = tokenizer_class.from_pretrained("sberbank-ai/rugpt3large_based_on_gpt2")
 app = Flask(__name__)
 
 def set_seed(seed=datetime.now().microsecond):
@@ -19,7 +19,7 @@ def set_seed(seed=datetime.now().microsecond):
 
 
 set_seed()
-model = model_class.from_pretrained("sberbank-ai/rugpt3medium_based_on_gpt2")
+model = model_class.from_pretrained("sberbank-ai/rugpt3large_based_on_gpt2")
 model.to(device)
 
 def cut_extra_stuff(txt):
@@ -60,7 +60,6 @@ def message():
     text = tokenizer.decode(generated_sequence, clean_up_tokenization_spaces=True)
     text = text[:text.find(stop_token) if stop_token else None]
     total_sequence = (
-      # prompt_text +
       text[len(
         tokenizer.decode(encoded_prompt[0], clean_up_tokenization_spaces=True)):].rsplit(' ', 1)[0])
 
