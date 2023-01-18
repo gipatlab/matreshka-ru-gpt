@@ -8,8 +8,8 @@ from flask import Flask, request, jsonify
 np.random.seed(42)
 torch.manual_seed(42)
 device = torch.device("cpu")
-tok = GPT2Tokenizer.from_pretrained("sberbank-ai/rugpt3small_based_on_gpt2")
-model = GPT2LMHeadModel.from_pretrained("sberbank-ai/rugpt3small_based_on_gpt2")
+tok = GPT2Tokenizer.from_pretrained("sberbank-ai/rugpt3medium_based_on_gpt2")
+model = GPT2LMHeadModel.from_pretrained("sberbank-ai/rugpt3medium_based_on_gpt2")
 app = Flask(__name__)
 
 
@@ -31,9 +31,6 @@ def generate(
       )
   return list(map(tok.decode, out))
 
-global tok
-model = None
-
 @app.route("/message", methods=["POST"])
 def message():
   try:
@@ -41,13 +38,11 @@ def message():
   except:
     return jsonify({'error': "Parameter message is required."})
 
-
-
   generated = generate(model, tok, message, num_beams=10)
 
   return jsonify({'generated': generated})
 
 
 if __name__ == "__main__":
-
   app.run(host="0.0.0.0", port=8081, debug=True, threaded=True)
+
