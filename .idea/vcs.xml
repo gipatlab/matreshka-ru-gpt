@@ -2,6 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/ru-gpts" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rugpt3large_based_on_gpt2" vcs="Git" />
   </component>
 </project>
