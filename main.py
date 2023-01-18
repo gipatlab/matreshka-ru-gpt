@@ -30,6 +30,9 @@ def generate(
       )
   return list(map(tok.decode, out))
 
+global tok
+model = None
+
 @app.route("/message", methods=["POST"])
 def message():
   try:
@@ -37,12 +40,14 @@ def message():
   except:
     return jsonify({'error': "Parameter message is required."})
 
+  tok = GPT2Tokenizer.from_pretrained("sberbank-ai/rugpt3large_based_on_gpt2")
+  model = GPT2LMHeadModel.from_pretrained("sberbank-ai/rugpt3large_based_on_gpt2")
+
   generated = generate(model, tok, message, num_beams=10)
 
   return jsonify({'generated': generated})
 
 
 if __name__ == "__main__":
-  tok = GPT2Tokenizer.from_pretrained("sberbank-ai/rugpt3large_based_on_gpt2")
-  model = GPT2LMHeadModel.from_pretrained("sberbank-ai/rugpt3large_based_on_gpt2")
-  app.run(host="0.0.0.0", port=8081, debug=True)
+
+  app.run(host="0.0.0.0", port=8081, debug=True, threaded=True)
