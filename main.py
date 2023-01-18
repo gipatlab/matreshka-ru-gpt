@@ -80,13 +80,17 @@ def message():
   except:
     no_repeat_ngram_size = 3
 
-
+  ds = False
+  if do_sample == "True":
+    ds = True
+  else:
+    ds = False
 
   generated = generate(
     model,
     tok,
     message,
-    do_sample=do_sample,
+    do_sample=ds,
     max_length=max_length,
     repetition_penalty=repetition_penalty,
     top_k=top_k,
