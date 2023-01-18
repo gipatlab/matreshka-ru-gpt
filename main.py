@@ -39,13 +39,9 @@ def message():
 
   output_sequences = model.generate(
     input_ids=encoded_prompt,
-    max_length=64 + len(encoded_prompt[0]),
-    temperature=1.0,
-    top_k=50,
-    top_p=0.92,
-    repetition_penalty=1.0,
-    do_sample=True,
-    num_return_sequences=1,
+    max_length=50,
+    no_repeat_ngram_size=3,
+    repetition_penalty=2.,
   )
 
   if len(output_sequences.shape) > 2:
